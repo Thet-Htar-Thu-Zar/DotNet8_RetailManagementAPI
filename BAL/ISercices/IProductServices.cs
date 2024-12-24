@@ -1,4 +1,5 @@
 ﻿using MODEL.DTOs;
+using MODEL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace BAL.ISercices
     public interface IProductServices
     {
         Task AddProduct(AddProductDTO inputModel);
-        Task UpdateProduct(UpdateProductDTO inputModel);
+        Task UpdateProduct(UpdateDTO inputModel);
+        Task DeleteProduct(DeleteProductDTO inputModel);
+        //Task<Products> GetProductById(GetProductByIdDTO inputModel);
     }
 }

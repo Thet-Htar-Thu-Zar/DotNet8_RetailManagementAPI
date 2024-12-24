@@ -6,16 +6,27 @@
         public int? RemainingStock { get; set;}
         public decimal? ProductPrice { get; set;}
         public decimal? ProductProfit { get; set;}
-        public string? CreatedBy { get; set;}
+        public string? CreatedBy { get; set; }
     }
 
-    public class  UpdateProductDTO
+    public class  UpdateDTO
     {
         public Guid ProductID { get; set; }
-        public string? ProductName { get; set; } 
+        public string? ProductName { get; set; } = null!;
         public int? RemainingStock { get; set; }
         public decimal? ProductPrice { get; set; }
         public decimal? ProductProfit { get; set; }
         public string? UpdatedBy { get;}
     }
+
+    public class DeleteProductDTO
+    {
+        public Guid ProductID { get; set; }
+        //public bool ActiveFlag { get; set; }
+    }
+
+    //public class GetProductByIdDTO
+    //{
+    //    public Guid ProductID { get; set;}
+    //}
 }

@@ -82,7 +82,7 @@ namespace REPOSITORY.Repositories
             return entitiesPerPage;
 
         }
-        public async Task<T?> GetById(int id) => await _entities.FindAsync(id);
+        public async Task<T?> GetById(Guid id) => await _entities.FindAsync(id);
 
         public async Task<T?> GetByIdAsync(int id)
         {
@@ -156,7 +156,7 @@ namespace REPOSITORY.Repositories
                     { "Pagination", $"No entities found on page{page}." },
                 };
             }
-            return entitiesPerPage;
+                return entitiesPerPage;
 
         }
         public async Task<bool> Create(T entity)

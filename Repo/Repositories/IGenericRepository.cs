@@ -6,7 +6,7 @@ namespace REPOSITORY.Repositories
     {
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> GetAllAsyncWithPagination(int page, int pageSize);
-        Task<T?> GetById(int id);
+        Task<T?> GetById(Guid id);
         Task<T?> GetByIdAsync(int id);
         Task Add(T entity);
         Task AddMultiple(IEnumerable<T> entity);

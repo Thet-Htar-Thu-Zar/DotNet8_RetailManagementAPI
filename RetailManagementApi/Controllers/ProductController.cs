@@ -37,6 +37,22 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        //[HttpGet("GetAllProductById")]
+        //public async Task <IActionResult> GetAllProductById([FromBody] GetProductByIdDTO inputModel)
+        //{
+        //    try
+        //    {
+        //        var productdata = await _productService.GetProductById(inputModel);
+        //        return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful });
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+        //    }
+        //}
+
         [HttpPost("AddProduct")]
 
         public async Task<IActionResult> AddProduct (AddProductDTO inputModel)
@@ -55,7 +71,7 @@ namespace RetailManagementApi.Controllers
 
         [HttpPost("UpdateProduct")]
 
-        public async Task<IActionResult> UpdateProduct(UpdateProductDTO inputModel)
+        public async Task<IActionResult> UpdateProduct(UpdateDTO inputModel)
         {
             try
             {
@@ -64,6 +80,23 @@ namespace RetailManagementApi.Controllers
 
             }
             catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        }
+
+        [HttpDelete("DeleteProduct")]
+
+        public async Task<IActionResult> DeleteProduct(DeleteProductDTO inputModel)
+        {
+            try
+            {
+                await _productService.DeleteProduct(inputModel);
+                return Ok(new ResponseModel { Message = "Delete Sucessfully", status = APIStatus.Successful });
+
+            }
+            catch(Exception ex)
             {
                 return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
 
