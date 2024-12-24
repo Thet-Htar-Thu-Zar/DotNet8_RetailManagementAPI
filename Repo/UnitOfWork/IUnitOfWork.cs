@@ -5,6 +5,9 @@ namespace REPOSITORY.UnitOfWork
     public interface IUnitOfWork: IDisposable
     {
         IProductRepository Product {  get; }
+
+        ISaleRepository Sale { get; }
         Task<int> SaveChangesAsync();
+
     }
 }

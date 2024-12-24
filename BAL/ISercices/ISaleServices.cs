@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MODEL.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace BAL.ISercices
 {
-    internal interface ISaleServices
+    public interface ISaleServices
     {
+        Task AddSale(CreateSaleDTO inputModel);
+
     }
 }

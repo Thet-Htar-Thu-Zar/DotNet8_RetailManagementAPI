@@ -6,7 +6,8 @@ namespace RetailManagementApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class Sale : ControllerBase
+    public class SaleController : ControllerBase
     {
+
     }
 }
