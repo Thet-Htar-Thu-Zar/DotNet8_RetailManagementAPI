@@ -1,5 +1,4 @@
 ﻿using BAL.ISercices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
 using MODEL.DTOs;
@@ -37,21 +36,21 @@ namespace RetailManagementApi.Controllers
             }
         }
 
-        //[HttpGet("GetAllProductById")]
-        //public async Task <IActionResult> GetAllProductById([FromBody] GetProductByIdDTO inputModel)
-        //{
-        //    try
-        //    {
-        //        var productdata = await _productService.GetProductById(inputModel);
-        //        return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful });
+        [HttpGet("GetAllProductById")]
+        public async Task <IActionResult> GetAllProductById(Guid id)
+        {
+            try
+            {
+                var productdata = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == id)).FirstOrDefault();
+                return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful, Data = productdata });
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
 
-        //    }
-        //}
+            }
+        }
 
         [HttpPost("AddProduct")]
 
