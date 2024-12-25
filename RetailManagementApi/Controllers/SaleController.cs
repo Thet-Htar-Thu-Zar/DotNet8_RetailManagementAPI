@@ -52,5 +52,18 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [HttpGet("GetSaleReportById")]
+        public async Task<IActionResult> GetSaleReportById(Guid id)
+        {
+            try
+            {
+                var saleport = await _saleServices.GetSaleReportById(id);
+                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = saleport });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+            }
+        }
     }
 }
