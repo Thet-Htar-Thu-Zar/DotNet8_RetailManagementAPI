@@ -9,7 +9,7 @@
     }
     public class SaleSummary
     {
-        public decimal TotalRevenue { get; set; } 
-        public decimal TotalProfit { get; set; }
+        public decimal TotalSaleRevenue { get; set; } 
+        public decimal TotalSaleProfit { get; set; }
     }
 }

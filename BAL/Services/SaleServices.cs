@@ -80,28 +80,36 @@ namespace BAL.Services
             }
         }
 
-        public async Task<SaleSummary> GetAllSaleSummary()
-        {
-            try
-            {
-                var salereport = (await _unitOfWork.Sale.GetAll());
+        //public async Task<SaleSummary> GetAllSaleSummary()
+        //{
+        //    try
+        //    {
+        //        var salereport = await _unitOfWork.Sale.GetAll();
 
-                if(salereport is null)
-                {
-                    throw new Exception("Sale report don't find");
-                }
+        //        if (salereport is null)
+        //        {
+        //            throw new Exception("Sale report don't find");
+        //        }
+        //        else
+        //        {
+        //            foreach (var report in salereport)
+        //            {
+        //                var addtotalsale = new SaleSummary()
+        //                {
+        //                    TotalSaleRevenue = Convert.ToDecimal(report.TotalPrice),
+        //                    TotalSaleProfit = Convert.ToDecimal(report.TotalProfit)
+        //                };
+        //            }
+                   
+        //            return SaleSummary;
+        //        }
+               
 
-                foreach(var sale in salereport)
-                {
-                    SaleSummary.ProductRevenue += sale.TotalPrice;
-                    SaleSummary.TotalProfit += sale.TotalProfit;
-                }
-                return SaleSummary;
-            }
-            catch(Exception)
-            {
-                throw;
-            }
-        }
+        //    }
+        //    catch(Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }

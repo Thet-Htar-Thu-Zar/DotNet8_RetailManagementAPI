@@ -67,5 +67,19 @@ namespace RetailManagementApi.Controllers
         }
 
         [HttpGet("GetSaleSummary")]
+        public async Task<IActionResult> GetSaleSummary()
+        {
+            try
+            {
+                var salereport = await _saleServices.GetAllSaleSummary();
+                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = salereport });
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        }
     }
 }
