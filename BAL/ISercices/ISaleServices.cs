@@ -8,5 +8,7 @@ namespace BAL.ISercices
         Task AddSale(CreateSaleDTO inputModel);
         Task <IEnumerable<SaleReports>> GetSaleReports();
         Task<SaleReports> GetSaleReportById(Guid id);
+        Task<SaleSummary> GetAllSaleSummary();
+
     }
 }
