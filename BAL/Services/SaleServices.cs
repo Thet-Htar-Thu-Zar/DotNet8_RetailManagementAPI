@@ -1,13 +1,7 @@
 ﻿using BAL.ISercices;
 using MODEL.DTOs;
 using MODEL.Entities;
-using REPOSITORY.Repositories.IRepositories;
 using REPOSITORY.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAL.Services
 {
@@ -24,21 +18,65 @@ namespace BAL.Services
         {
             try
             {
-                var addsale = new SaleReports()
+                var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == inputModel.ProductID)).FirstOrDefault();
+                if (product_data != null)
                 {
-                    ProductID = inputModel.ProductID,
-                    QuantitySold = inputModel.QuantitySold,
-                    TotalPrice = inputModel.TotalPrice,
-                    TotalProfit = inputModel.TotalProfit,
-                    CreatedBy = inputModel.CreatedBy,
-                };
+                    product_data.RemainingStock -= inputModel.QuantitySold;
+                    _unitOfWork.Product.Update(product_data);
 
-                await _unitOfWork.Sale.Add(addsale);
-                await _unitOfWork.SaveChangesAsync();
+                    var addsale = new SaleReports()
+                    {
+                        ProductID = inputModel.ProductID,
+                        QuantitySold = inputModel.QuantitySold,
+                        TotalPrice = product_data.ProductPrice * inputModel.QuantitySold,
+                        TotalProfit = product_data.ProductProfit * inputModel.QuantitySold,
+                        CreatedBy = inputModel.CreatedBy,
+                    };
+
+                    await _unitOfWork.Sale.Add(addsale);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+
             }
             catch (Exception)
             {
-                
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<SaleReports>> GetSaleReports()
+        {
+            try
+            {
+                var lst = await _unitOfWork.Sale.GetAll();
+                if(lst is null)
+                {
+                    throw new Exception("No item in sale report..");
+                }
+                return lst;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<SaleReports> GetSaleReportById(Guid id)
+        {
+            try
+            {
+                var saleReport = (await _unitOfWork.Sale.GetByCondition(x => x.SaleID == id)).FirstOrDefault();
+
+                if(saleReport is null)
+                {
+                    throw new Exception("No data found");
+                }
+
+                return saleReport;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

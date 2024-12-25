@@ -13,22 +13,21 @@ namespace BAL.Services
         {
             _unitOfWork = unitOfWork;
         }
-        //public async Task<Products> GetProductById (GetProductByIdDTO inputModel)
-        //{
-        //    try
-        //    {
-        //        Guid pid = inputModel.ProductID;
-        //        var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == pid)).FirstOrDefault();
-        //        if(product_data != null)
-        //        {
-        //            await _unitOfWork.Product.GetById(pid);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+        public async Task GetProductById(Guid id)
+        {
+            try
+            {
+                var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == id)).FirstOrDefault();
+                if (product_data != null)
+                {
+                    await _unitOfWork.Product.GetById(id);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public async Task AddProduct(AddProductDTO inputModel)
         {
             try
