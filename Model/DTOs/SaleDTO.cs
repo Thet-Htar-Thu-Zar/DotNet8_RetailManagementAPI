@@ -4,8 +4,6 @@
     {
         public Guid ProductID { get; set; }
         public int? QuantitySold { get; set; }
-        public decimal? TotalPrice { get; set; }
-        public decimal? TotalProfit { get; set; }
         public string? CreatedBy { get; set; }
 
     }
