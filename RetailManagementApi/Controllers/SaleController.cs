@@ -65,5 +65,7 @@ namespace RetailManagementApi.Controllers
                 return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
             }
         }
+
+
     }
 }

@@ -7,4 +7,9 @@
         public string? CreatedBy { get; set; }
 
     }
+    public class SaleSummary
+    {
+        public decimal TotalRevenue { get; set; } 
+        public decimal TotalProfit { get; set; }
+    }
 }
