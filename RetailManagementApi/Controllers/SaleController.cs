@@ -66,6 +66,6 @@ namespace RetailManagementApi.Controllers
             }
         }
 
-
+        [HttpGet("GetSaleSummary")]
     }
 }

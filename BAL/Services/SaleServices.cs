@@ -79,5 +79,29 @@ namespace BAL.Services
                 throw;
             }
         }
+
+        public async Task<SaleSummary> GetAllSaleSummary()
+        {
+            try
+            {
+                var salereport = (await _unitOfWork.Sale.GetAll());
+
+                if(salereport is null)
+                {
+                    throw new Exception("Sale report don't find");
+                }
+
+                foreach(var sale in salereport)
+                {
+                    SaleSummary.ProductRevenue += sale.TotalPrice;
+                    SaleSummary.TotalProfit += sale.TotalProfit;
+                }
+                return SaleSummary;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
     }
 }
