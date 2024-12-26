@@ -28,8 +28,8 @@ namespace BAL.Services
                     {
                         ProductID = inputModel.ProductID,
                         QuantitySold = inputModel.QuantitySold,
-                        TotalPrice = product_data.ProductPrice * inputModel.QuantitySold,
-                        TotalProfit = product_data.ProductProfit * inputModel.QuantitySold,
+                        TotalPrice = Convert.ToDecimal(product_data.ProductPrice * inputModel.QuantitySold),
+                        TotalProfit = Convert.ToDecimal(product_data.ProductProfit * inputModel.QuantitySold),
                         CreatedBy = inputModel.CreatedBy,
                     };
 
