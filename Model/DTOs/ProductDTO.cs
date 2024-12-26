@@ -22,11 +22,5 @@
     public class DeleteProductDTO
     {
         public Guid ProductID { get; set; }
-        //public bool ActiveFlag { get; set; }
     }
-
-    //public class GetProductByIdDTO
-    //{
-    //    public Guid ProductID { get; set;}
-    //}
 }
