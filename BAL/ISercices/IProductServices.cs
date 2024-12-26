@@ -13,6 +13,6 @@ namespace BAL.ISercices
         Task AddProduct(AddProductDTO inputModel);
         Task UpdateProduct(UpdateDTO inputModel);
         Task DeleteProduct(DeleteProductDTO inputModel);
-        Task GetProductById(Guid id);
+        //Task GetProductById(Guid id);
     }
 }
