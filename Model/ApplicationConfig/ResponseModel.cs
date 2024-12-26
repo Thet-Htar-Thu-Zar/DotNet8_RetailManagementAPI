@@ -24,8 +24,6 @@
             public const string NoData = "No data was found";
             public const string Result = "Result found!";
             public const string UpdateFail = "Updated Fail.";
-
-
         }
     }
 }
