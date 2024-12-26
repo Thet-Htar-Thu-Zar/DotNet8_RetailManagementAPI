@@ -68,10 +68,12 @@ namespace BAL.Services
 
                 if(saleReport is null)
                 {
-                    throw new Exception("No data found");
+                    throw new Exception("Sale report doesn't exist....");
                 }
+                var activeSaleReport = saleReport.ActiveFlag == true;
 
                 return saleReport;
+
             }
             catch (Exception)
             {
@@ -101,6 +103,24 @@ namespace BAL.Services
                     };
 
                     return totalSaleSummary;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task DeleteSale(DeleteSale inputModel)
+        {
+            try
+            {
+                var salereport = (await _unitOfWork.Sale.GetByCondition(x => x.SaleID == inputModel.SaleID)).FirstOrDefault();
+
+                if (salereport is not null)
+                {
+                    salereport.ActiveFlag = false;
+                    await _unitOfWork.SaveChangesAsync();
                 }
             }
             catch (Exception)

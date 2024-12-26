@@ -83,8 +83,8 @@ namespace BAL.Services
                 {
                     product_data.ActiveFlag = false;
                     //_unitOfWork.Product.Delete(product_data);
+                    await _unitOfWork.SaveChangesAsync();
                 }
-                await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception)
             {
