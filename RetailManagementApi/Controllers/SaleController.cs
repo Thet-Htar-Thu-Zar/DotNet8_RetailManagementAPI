@@ -60,9 +60,9 @@ namespace RetailManagementApi.Controllers
         {
             try
             {
-                var salerport = await _saleServices.GetSaleReportById(id);
+                var salereport = await _saleServices.GetSaleReportById(id);
                 
-                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = saleport });
+                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = salereport });
             }
             catch (Exception ex)
             {
