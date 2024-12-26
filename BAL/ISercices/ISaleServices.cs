@@ -9,6 +9,5 @@ namespace BAL.ISercices
         Task <IEnumerable<SaleReports>> GetSaleReports();
         Task<SaleReports> GetSaleReportById(Guid id);
         Task<SaleSummary> GetAllSaleSummary();
-
     }
 }
