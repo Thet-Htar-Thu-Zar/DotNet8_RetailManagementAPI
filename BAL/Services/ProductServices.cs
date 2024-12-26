@@ -90,7 +90,6 @@ namespace BAL.Services
             {
                 throw;
             }
-        }
-     
+        }    
     }
 }
