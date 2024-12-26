@@ -1,7 +1,9 @@
 ﻿using BAL.ISercices;
+using MODEL.ApplicationConfig;
 using MODEL.DTOs;
 using MODEL.Entities;
 using REPOSITORY.UnitOfWork;
+using static MODEL.ApplicationConfig.ResponseModel;
 
 namespace BAL.Services
 {
@@ -47,12 +49,15 @@ namespace BAL.Services
         {
             try
             {
-                var lst = await _unitOfWork.Sale.GetAll();
-                if(lst is null)
+                var lst = await _unitOfWork.Sale.GetByCondition(x => x.ActiveFlag == true);
+
+                if (lst == null || !lst.Any())
                 {
-                    throw new Exception("No item in sale report..");
+                    throw new Exception("No active items in the sale report.");
                 }
+
                 return lst;
+
             }
             catch (Exception)
             {
@@ -70,7 +75,11 @@ namespace BAL.Services
                 {
                     throw new Exception("Sale report doesn't exist....");
                 }
-                var activeSaleReport = saleReport.ActiveFlag == true;
+                if (saleReport.ActiveFlag != true)
+                {
+                    throw new Exception("Sale report doesn't exist....");
+
+                }
 
                 return saleReport;
 

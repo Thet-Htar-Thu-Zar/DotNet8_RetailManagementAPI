@@ -45,12 +45,21 @@ namespace RetailManagementApi.Controllers
             {
                 var productdata = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == id)).FirstOrDefault();
 
-                if(productdata is null)
+                if (productdata is null)
                 {
-                    throw new Exception("Sale report doesn't exist....");
+                    throw new Exception("Product data doesn't exist....");
 
                 }
-                var activeProduct = productdata.ActiveFlag == true;
+
+                if (productdata.ActiveFlag != true)
+                {
+                    return BadRequest(new ResponseModel
+                    {
+                        Message = "Product is not active.",
+                        status = APIStatus.Error
+                    });
+                }
+
                 return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful, Data = productdata });
 
             }
