@@ -13,6 +13,7 @@ namespace BAL.Services
         {
             _unitOfWork = unitOfWork;
         }
+
         //public async Task GetProductById(Guid id)
         //{
         //    try
@@ -28,6 +29,7 @@ namespace BAL.Services
         //        throw;
         //    }
         //}
+
         public async Task AddProduct(AddProductDTO inputModel)
         {
             try
@@ -89,7 +91,6 @@ namespace BAL.Services
                 throw;
             }
         }
-
      
     }
 }
