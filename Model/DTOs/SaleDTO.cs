@@ -11,4 +11,9 @@
         public decimal TotalSaleRevenue { get; set; } 
         public decimal TotalSaleProfit { get; set; }
     }
+
+    public class DeleteSale
+    {
+        public Guid SaleID { get; set; }
+    }
 }
