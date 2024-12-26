@@ -21,8 +21,7 @@ namespace RetailManagementApi.Controllers
             _productService = productService;
         }
 
-        [HttpGet("GetAllProduct")]
-        
+        [HttpGet("GetAllProduct")]      
         public async Task <IActionResult> GetAllProduct() 
         {
             try
@@ -45,6 +44,13 @@ namespace RetailManagementApi.Controllers
             try
             {
                 var productdata = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == id)).FirstOrDefault();
+
+                if(productdata is null)
+                {
+                    throw new Exception("Sale report doesn't exist....");
+
+                }
+                var activeProduct = productdata.ActiveFlag == true;
                 return Ok(new ResponseModel { Message = "Sucessfully", status = APIStatus.Successful, Data = productdata });
 
             }

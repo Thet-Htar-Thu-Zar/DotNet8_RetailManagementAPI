@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
 using MODEL.DTOs;
+using MODEL.Entities;
 using REPOSITORY.UnitOfWork;
 using static MODEL.ApplicationConfig.ResponseModel;
 
@@ -43,7 +44,9 @@ namespace RetailManagementApi.Controllers
             try
             {
                 var salereport = await _saleServices.GetSaleReports();
-                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = salereport });
+                var activeSalereport = salereport.Where(p => p.ActiveFlag == true).ToList();
+
+                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = activeSalereport });
             }
             catch(Exception ex)
             {
@@ -57,7 +60,8 @@ namespace RetailManagementApi.Controllers
         {
             try
             {
-                var saleport = await _saleServices.GetSaleReportById(id);
+                var salerport = await _saleServices.GetSaleReportById(id);
+                
                 return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = saleport });
             }
             catch (Exception ex)
@@ -79,6 +83,20 @@ namespace RetailManagementApi.Controllers
             {
                 return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
 
+            }
+        }
+
+        [HttpDelete("DeleteSaleReport")]
+        public async Task<IActionResult> DeleteSale(DeleteSale inputModel)
+        {
+            try
+            {
+                await _saleServices.DeleteSale(inputModel);
+                return Ok(new ResponseModel { Message = "Delete Sucessfully", status = APIStatus.Successful });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
             }
         }
     }
