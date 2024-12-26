@@ -13,7 +13,6 @@ namespace BAL.Services
         {
             _unitOfWork = unitOfWork;
         }
-
         public async Task AddSale(CreateSaleDTO inputModel)
         {
             try
