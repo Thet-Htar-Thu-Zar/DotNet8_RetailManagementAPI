@@ -5,7 +5,6 @@
         public Guid ProductID { get; set; }
         public int QuantitySold { get; set; }
         public string? CreatedBy { get; set; }
-
     }
     public class SaleSummary
     {
