@@ -42,8 +42,8 @@ namespace RetailManagementApi.Controllers
         {
             try
             {
-                await _saleServices.GetSaleReports();
-                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful });
+                var salereport = await _saleServices.GetSaleReports();
+                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = salereport });
             }
             catch(Exception ex)
             {

@@ -28,7 +28,10 @@ namespace RetailManagementApi.Controllers
             try
             {
                 var productdata = await _unitOfWork.Product.GetAll();
-                return Ok(new ResponseModel { Message = "Successfully", status = APIStatus.Successful, Data = productdata});
+
+                var activeProducts = productdata.Where(p => p.ActiveFlag == true).ToList();
+
+                return Ok(new ResponseModel { Message = "Successfully", status = APIStatus.Successful, Data = activeProducts});
             }
             catch (Exception ex)
             {
