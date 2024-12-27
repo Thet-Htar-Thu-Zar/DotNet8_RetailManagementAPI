@@ -87,7 +87,6 @@ namespace RetailManagementApi.Controllers
         }
 
         [HttpPost("UpdateProduct")]
-
         public async Task<IActionResult> UpdateProduct(UpdateDTO inputModel)
         {
             try
@@ -104,7 +103,6 @@ namespace RetailManagementApi.Controllers
         }
 
         [HttpDelete("DeleteProduct")]
-
         public async Task<IActionResult> DeleteProduct(DeleteProductDTO inputModel)
         {
             try

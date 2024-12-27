@@ -3,6 +3,7 @@ using MODEL.ApplicationConfig;
 using MODEL.DTOs;
 using MODEL.Entities;
 using REPOSITORY.UnitOfWork;
+using System.ComponentModel.DataAnnotations;
 using static MODEL.ApplicationConfig.ResponseModel;
 
 namespace BAL.Services
@@ -15,13 +16,75 @@ namespace BAL.Services
         {
             _unitOfWork = unitOfWork;
         }
+        public async Task AddSaleMultiple(IEnumerable<CreateSaleDTO> inputModel)
+        {
+            try
+            {
+                foreach(var sale in inputModel)
+                {
+                    var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == sale.ProductID)).FirstOrDefault();
+
+                    if (product_data != null)
+                    {
+                        if (product_data.ActiveFlag != true)
+                        {
+                            throw new Exception("Product doesn't find...");
+                        }
+
+                        if (product_data.RemainingStock < sale.QuantitySold)
+                        {
+                            throw new Exception("Remaining Stock is not enough..");
+                        }
+
+                        if(sale.QuantitySold <= 0)
+                        {
+                            throw new Exception("Quantity is more than 0...");
+                        }
+                        product_data.RemainingStock -= sale.QuantitySold;
+                        _unitOfWork.Product.Update(product_data);
+
+                        await _unitOfWork.Sale.Add(new SaleReports()
+                        {
+                            ProductID = sale.ProductID,
+                            QuantitySold = sale.QuantitySold,
+                            TotalPrice = Convert.ToDecimal(product_data.ProductPrice * sale.QuantitySold),
+                            TotalProfit = Convert.ToDecimal(product_data.ProductProfit * sale.QuantitySold),
+                            CreatedBy = sale.CreatedBy,
+                        });
+
+                    }
+                }
+                        await _unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task AddSale(CreateSaleDTO inputModel)
         {
             try
             {
                 var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == inputModel.ProductID)).FirstOrDefault();
+
                 if (product_data != null)
                 {
+                    if (product_data.ActiveFlag != true)
+                    {
+                        throw new Exception("Product doesn't find...");
+                    }
+
+                    if (product_data.RemainingStock < inputModel.QuantitySold)
+                    {
+                        throw new Exception("Remaining Stock is not enough...");
+                    }
+
+                    if(inputModel.QuantitySold <= 0)
+                    {
+                        throw new Exception("Quantity is more than O...");
+                    }
+
                     product_data.RemainingStock -= inputModel.QuantitySold;
                     _unitOfWork.Product.Update(product_data);
 

@@ -50,19 +50,39 @@ namespace BAL.Services
                 throw;
             }
         }
-
         public async Task UpdateProduct (UpdateDTO inputModel)
         {
             try
             {
                 var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == inputModel.ProductID)).FirstOrDefault();
+
+                if(product_data.ActiveFlag != true)
+                {
+                    throw new Exception("That product is not active");
+                }
                 if (product_data != null)
                 {
-                    product_data.ProductName = inputModel.ProductName;
-                    product_data.RemainingStock = Convert.ToInt32(inputModel.RemainingStock);
-                    product_data.ProductPrice = Convert.ToDecimal(inputModel.ProductPrice);
-                    product_data.ProductProfit = Convert.ToDecimal(inputModel.ProductProfit);
-                    product_data.UpdatedBy = "Admin";
+                    if(inputModel.ProductName != null)
+                    {
+                        product_data.ProductName = inputModel.ProductName;
+                    }
+                    if(inputModel.RemainingStock != null)
+                    {
+                        product_data.RemainingStock = Convert.ToInt32(inputModel.RemainingStock);
+                    }
+                    if (inputModel.ProductPrice != null)
+                    {
+                        product_data.ProductPrice = Convert.ToDecimal(inputModel.ProductPrice);
+
+                    }
+                    if(inputModel.ProductProfit  != null)
+                    {
+                        product_data.ProductProfit = Convert.ToDecimal(inputModel.ProductProfit);
+                    }
+                    if(inputModel.UpdatedBy == null)
+                    {
+                        product_data.UpdatedBy = "Admin";
+                    }
                     product_data.UpdatedDate = DateTime.UtcNow;
                     _unitOfWork.Product.Update(product_data);
                 }
@@ -73,7 +93,6 @@ namespace BAL.Services
                 throw;
             }
         }
-
         public async Task DeleteProduct(DeleteProductDTO inputModel)
         {
             try

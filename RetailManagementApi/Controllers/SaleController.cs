@@ -22,6 +22,20 @@ namespace RetailManagementApi.Controllers
             _unitOfWork = unitOfWork;
             _saleServices = saleServices;
         }
+        [HttpPost("AddMultipleSale")]
+        public async Task<IActionResult> AddSaleMultiple(IEnumerable<CreateSaleDTO> inputModel)
+        {
+            try
+            {
+                await _saleServices.AddSaleMultiple(inputModel);
+                return Ok(new ResponseModel { Message = "Sale Create Sucessfully", status = APIStatus.Successful });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+            }
+
+        }
 
         [HttpPost("AddSale")]
         public async Task<IActionResult> AddSale(CreateSaleDTO inputModel)
