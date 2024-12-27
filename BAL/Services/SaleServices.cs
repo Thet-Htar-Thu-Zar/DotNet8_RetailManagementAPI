@@ -1,10 +1,7 @@
 ﻿using BAL.ISercices;
-using MODEL.ApplicationConfig;
 using MODEL.DTOs;
 using MODEL.Entities;
 using REPOSITORY.UnitOfWork;
-using System.ComponentModel.DataAnnotations;
-using static MODEL.ApplicationConfig.ResponseModel;
 
 namespace BAL.Services
 {
@@ -194,6 +191,34 @@ namespace BAL.Services
                     salereport.ActiveFlag = false;
                     await _unitOfWork.SaveChangesAsync();
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<SaleReports>> GetAllSaleReportsWithPagination(int page, int pageSize)
+        {
+            try
+            {
+                var lst = await _unitOfWork.Sale.GetByCondition(x => x.ActiveFlag == true);
+                var totalCount = lst.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+                if (page < 1 || page > totalPages)
+                {
+                    throw new Exception($"Invalid page number.. The page should be between 1 and {pageSize}");
+                }
+
+                var lstPerPage = lst.Skip((page - 1) * pageSize).Take(pageSize).Take(pageSize);
+
+                if (!lstPerPage.Any())
+                {
+                    throw new Exception("No Sale List on page");
+                }
+
+                return lstPerPage;
             }
             catch (Exception)
             {

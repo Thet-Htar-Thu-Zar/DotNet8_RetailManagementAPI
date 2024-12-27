@@ -69,6 +69,24 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [HttpGet("GetSaleReportWithPagination")]
+
+        public async Task<IActionResult> GetSaleReportWithPagination(int page , int pageSize )
+        {
+            try
+            {
+                var salereport = await _saleServices.GetAllSaleReportsWithPagination(page, pageSize);
+                var activeSalereport = salereport.Where(p => p.ActiveFlag == true).ToList();
+
+                return Ok(new ResponseModel { Message = "Sale Reports display successfully", status = APIStatus.Successful, Data = activeSalereport });
+            }
+            catch(Exception ex)
+            {
+                return Ok(new ResponseModel { Message = ex.Message, status = APIStatus.Error });
+
+            }
+        }
+
         [HttpGet("GetSaleReportById")]
         public async Task<IActionResult> GetSaleReportById(Guid id)
         {

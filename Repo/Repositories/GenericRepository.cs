@@ -59,7 +59,7 @@ namespace REPOSITORY.Repositories
             var totalCount = entities.Count;
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
-            if(page < 1 || page < totalPages)
+            if(page < 1 || page > totalPages)
             {
                 var errors = new Dictionary<string, string>
                 {
