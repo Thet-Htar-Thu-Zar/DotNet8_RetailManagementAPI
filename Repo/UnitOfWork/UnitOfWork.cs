@@ -16,9 +16,11 @@ namespace REPOSITORY.UnitOfWork
             Appsetting = appsettings.Value;
             Product = new ProductRepository(dataContext);
             Sale = new SaleRepository(dataContext);
+            User = new UserRepository(dataContext);
         }
         public IProductRepository Product { get; set; }
         public ISaleRepository Sale { get; set; }
+        public IUserRepository User { get; set; }
         public Appsetting Appsetting { get; set; }
 
         public void Dispose()

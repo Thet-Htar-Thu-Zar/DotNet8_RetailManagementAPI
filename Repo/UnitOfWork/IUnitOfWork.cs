@@ -7,6 +7,6 @@ namespace REPOSITORY.UnitOfWork
         IProductRepository Product {  get; }
         ISaleRepository Sale { get; }
         Task<int> SaveChangesAsync();
-
+        IUserRepository User { get; }
     }
 }
