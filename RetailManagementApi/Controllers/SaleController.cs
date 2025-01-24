@@ -1,4 +1,5 @@
 ﻿using BAL.ISercices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
@@ -22,6 +23,8 @@ namespace RetailManagementApi.Controllers
             _unitOfWork = unitOfWork;
             _saleServices = saleServices;
         }
+
+        [Authorize(Roles = "User")]
         [HttpPost("AddMultipleSale")]
         public async Task<IActionResult> AddSaleMultiple(IEnumerable<CreateSaleDTO> inputModel)
         {
@@ -37,6 +40,7 @@ namespace RetailManagementApi.Controllers
 
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost("AddSale")]
         public async Task<IActionResult> AddSale(CreateSaleDTO inputModel)
         {
@@ -52,6 +56,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetSaleReport")]
         public async Task<IActionResult> GetSaleReport()
         {
@@ -69,8 +74,8 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetSaleReportWithPagination")]
-
         public async Task<IActionResult> GetSaleReportWithPagination(int page , int pageSize )
         {
             try
@@ -87,6 +92,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetSaleReportById")]
         public async Task<IActionResult> GetSaleReportById(Guid id)
         {
@@ -102,6 +108,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetSaleSummary")]
         public async Task<IActionResult> GetSaleSummary()
         {
@@ -118,6 +125,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteSaleReport")]
         public async Task<IActionResult> DeleteSale(DeleteSale inputModel)
         {

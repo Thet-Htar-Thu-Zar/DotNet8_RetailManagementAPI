@@ -1,4 +1,5 @@
 ﻿using BAL.ISercices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
 using MODEL.DTOs;
@@ -21,6 +22,7 @@ namespace RetailManagementApi.Controllers
             _productService = productService;
         }
 
+        [Authorize(Roles = "User,Admin")]
         [HttpGet("GetAllProduct")]      
         public async Task <IActionResult> GetAllProduct() 
         {
@@ -38,6 +40,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllProductById")]
         public async Task <IActionResult> GetAllProductById(Guid id)
         {
@@ -70,8 +73,8 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("AddProduct")]
-
         public async Task<IActionResult> AddProduct (AddProductDTO inputModel)
         {
             try
@@ -86,6 +89,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct(UpdateDTO inputModel)
         {
@@ -102,6 +106,7 @@ namespace RetailManagementApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteProduct")]
         public async Task<IActionResult> DeleteProduct(DeleteProductDTO inputModel)
         {
