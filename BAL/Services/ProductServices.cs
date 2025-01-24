@@ -54,15 +54,11 @@ namespace BAL.Services
         {
             try
             {
-                var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == inputModel.ProductID)).FirstOrDefault();
+                var product_data = (await _unitOfWork.Product.GetByCondition(x => x.ProductID == inputModel.ProductID && x.ActiveFlag == true)).FirstOrDefault();
 
-                if(product_data.ActiveFlag != true)
-                {
-                    throw new Exception("That product is not active");
-                }
                 if (product_data != null)
                 {
-                    if(inputModel.ProductName != null)
+                    if(!string.IsNullOrEmpty(inputModel.ProductName))
                     {
                         product_data.ProductName = inputModel.ProductName;
                     }
@@ -101,7 +97,7 @@ namespace BAL.Services
                 if(product_data != null)
                 {
                     product_data.ActiveFlag = false;
-                    //_unitOfWork.Product.Delete(product_data);
+                    _unitOfWork.Product.Update(product_data);
                     await _unitOfWork.SaveChangesAsync();
                 }
             }

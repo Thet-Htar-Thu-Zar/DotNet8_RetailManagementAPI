@@ -109,7 +109,8 @@ namespace BAL.Services
         {
             try
             {
-                var lst = await _unitOfWork.Sale.GetByCondition(x => x.ActiveFlag == true);
+                var lst = (await _unitOfWork.Sale.GetByCondition(x => x.ActiveFlag == true))
+                    .OrderByDescending(x => x.CreatedDate);
 
                 if (lst == null || !lst.Any())
                 {
